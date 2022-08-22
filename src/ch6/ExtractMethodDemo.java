@@ -14,6 +14,7 @@ import java.util.Date;
  *
  * 1. 提取无局部变量的方法
  * 2. 提取有局部变量的方法，当局部变量只被读取时，可简单的直接将局部变量作为参数传入，idea会智能的帮助我们直接生成一个带有这两个参数的方法
+ * 3. 提取有局部变量的方法，当局部变量是一个数据结构（对象），且在提取的方法中只修改这个结构中的数据时，也可简单的直接将局部变量作为参数传入
  */
 public class ExtractMethodDemo {
 
@@ -31,12 +32,15 @@ public class ExtractMethodDemo {
             outstanding += order.amount;
         }
 
-        //record due date
-        Date today = new Date();
-        invoice.dueDate = today;
+        recordDueDate(invoice);
 
         printDetails(invoice, outstanding);
 
+    }
+
+    private static void recordDueDate(Invoice invoice) {
+        Date today = new Date();
+        invoice.dueDate = today;
     }
 
     private static void printDetails(Invoice invoice, int outstanding) {
