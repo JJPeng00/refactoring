@@ -13,6 +13,7 @@ import java.util.Date;
  * idea中选中某段代码后使用 Ctrl+Alt+M快捷键可将选中的代码提取为一个方法
  *
  * 1. 提取无局部变量的方法
+ * 2. 提取有局部变量的方法，当局部变量只被读取时，可简单的直接将局部变量作为参数传入，idea会智能的帮助我们直接生成一个带有这两个参数的方法
  */
 public class ExtractMethodDemo {
 
@@ -34,11 +35,14 @@ public class ExtractMethodDemo {
         Date today = new Date();
         invoice.dueDate = today;
 
-        //print details
+        printDetails(invoice, outstanding);
+
+    }
+
+    private static void printDetails(Invoice invoice, int outstanding) {
         System.out.println("name: " + invoice.customer);
         System.out.println("amount: " + outstanding);
         System.out.println("due: " + invoice.dueDate);
-
     }
 
     private static void printBanner() {
