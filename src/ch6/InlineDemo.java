@@ -21,11 +21,8 @@ public class InlineDemo {
     }
 
     private static int rating(Driver driver) {
-        return moreThanFiveLateDeliveries(driver) ? 2 : 1;
+        //内联后，idea可以帮助我们自动改变局部变量的名称由dvr修改为driver
+        return driver.getNumberOfLateDeliveries() > 5 ? 2 : 1;
     }
 
-    private static boolean moreThanFiveLateDeliveries(Driver dvr) {
-        //内联时，idea可以帮助我们自动改变局部变量的名称
-        return dvr.getNumberOfLateDeliveries() > 5;
-    }
 }
