@@ -11,6 +11,8 @@ package ch6;
  *    并且现有的语句也是根据这个样式构建的，但我们可以通过提取变量使其变得更加容易理解。
  * 2. 将这几个表达式分别提炼成变量
  *
+ * 3. 进一步提取方法：如果当前表达式被多处调用，或者表达式是当前是类的基础操作，我们可以进一步将表达式提取成方法，以达到复用的目的。
+ *
  * note：
  *      我们可以把对事物新的认识当作是一种知识，如同这里我们把了解到的：
  *      价格（price） = 底价（base price）- 批发折扣（quantity discount） + 运费（shipping）
@@ -24,9 +26,21 @@ public class ExtractVariableDemo {
     }
 
     private static int price(Order order) {
-        final int basePrice = order.quantity * order.itemPrice;
-        final int quantityDiscount = Math.max(0, order.quantity - 500) * (int) (order.itemPrice * 0.05);
-        final int shipping = (int) Math.min(order.quantity * order.itemPrice * 0.1, 100);
+        final int basePrice = getBasePrice(order);
+        final int quantityDiscount = getQuantityDiscount(order);
+        final int shipping = getShipping(order);
         return basePrice - quantityDiscount + shipping;
+    }
+
+    private static int getShipping(Order order) {
+        return (int) Math.min(order.quantity * order.itemPrice * 0.1, 100);
+    }
+
+    private static int getQuantityDiscount(Order order) {
+        return Math.max(0, order.quantity - 500) * (int) (order.itemPrice * 0.05);
+    }
+
+    private static int getBasePrice(Order order) {
+        return order.quantity * order.itemPrice;
     }
 }
