@@ -13,6 +13,10 @@ package ch6;
  *
  * 3. 进一步提取方法：如果当前表达式被多处调用，或者表达式是当前是类的基础操作，我们可以进一步将表达式提取成方法，以达到复用的目的。
  *
+ * 4. 内联变量，当变量的存在是多余的或者变量的右值（赋值语句）更具表现力，我们可以通过内联变量将变量替换为右值
+ *
+ * idea提供了内联变量的快捷键：Ctrl + Alt + N，将光标移动到要内联的变量上，并应用快捷键内联变量。
+ *
  * note：
  *      我们可以把对事物新的认识当作是一种知识，如同这里我们把了解到的：
  *      价格（price） = 底价（base price）- 批发折扣（quantity discount） + 运费（shipping）
@@ -26,10 +30,7 @@ public class ExtractVariableDemo {
     }
 
     private static int price(Order order) {
-        final int basePrice = getBasePrice(order);
-        final int quantityDiscount = getQuantityDiscount(order);
-        final int shipping = getShipping(order);
-        return basePrice - quantityDiscount + shipping;
+        return getBasePrice(order) - getQuantityDiscount(order) + getShipping(order);
     }
 
     private static int getShipping(Order order) {
